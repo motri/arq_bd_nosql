@@ -12,7 +12,13 @@ En las bases de datos no sql el concepto de esquema es un tanto anacronista ya q
 Las colecciones se pueden entender como tablas, pero eso no quiere decir que dividir los datos en colecciones no siempre es util. MongoDB permite agrupar todos los datos en sus documentos, lo que se conoce como Embedding o dividirlos en colecciones logicas agrupadas por el tipo de datos (teniendo en cuenta cosas como patrones de acceso), conocido como Referencing.
 Para nuestra problematica, podriamos crear colecciones basandonos en posición (GK para porteras por ejemplo) o edad (Young Football Player of the Year). Sin embargo en otros casos como Balon de oro y Player of the Year se consideran todas las posiciones, por lo que quedaría considerar: ¿Nos interesa una colección que solo abarque las porteras, otra jugadoras menores de cierta edad y una por equipos? Nos importa la duplicacion de datos en varias colecciones?
 Consideremos los patrones de acceso:
-
+- WRITES:
+  Resultado de partido, jugado en casa, rango de victoria (diferencia de goles) => Best Club of the Year (Womens Football Award)
+  Paradas, paradas de penalty, minutos jugados => El guante de oro
+  Stadisticas generales de jugadoras => Otras competiciones
+- READS:
+  Mayor numero de partidos ganados, ordenados por la mayoria ganados fuera de casa, y rango de victoria (en caso de empate las dos ultimas deciden el orden)
+  Mayor numero de paradas por porteras utilizando 
 ### Tareas
 Las tareas que se piden son las siguientes:
 1. Explicar las ventajas y desventajas de la BD NOSQL seleccionada, en resumen, el por
