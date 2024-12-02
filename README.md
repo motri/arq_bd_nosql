@@ -7,7 +7,13 @@ Queremos poder hacer el seguimiento de las jugadoras de futbal profesional para 
 - Player of the year (Womens Football Award)
 - Young Football Player of the Year (Womens Football Award)
 - Best Club of the Year (Womens Football Award)
-### Esquemas
+
+### Estrategia
+#### Base de datos
+
+La eleccion en mi caso para esta propuesta es MongoDB ya que entre otras cosas preveo patrones de lectura algo complejos y comparada con otras (por ejemplo Cassandra) MongoDB es mas adecuada. 
+
+#### Esquemas
 En las bases de datos NoSQL, el concepto de esquema puede parecer algo anacrónico, ya que estas bases de datos están diseñadas, en principio, para ser "sin esquema". Sin embargo, normalmente existen ciertos requisitos mínimos que deben cumplirse. Por ejemplo, en DynamoDB siempre se necesita una partition key y, si está definida, una sort key. Esto no significa que no debamos modelar nuestros datos siguiendo ciertos criterios. En el caso de MongoDB, surge el concepto de colecciones.
 
 Las colecciones pueden compararse con las tablas en las bases de datos relacionales, aunque esto no implica que dividir los datos en múltiples colecciones sea siempre la mejor opción. MongoDB permite dos enfoques principales para organizar los datos:
@@ -31,7 +37,11 @@ Consideremos los patrones de acceso:
 - READS:
   Mayor numero de partidos ganados, ordenados por la mayoria ganados fuera de casa, y rango de victoria (en caso de empate las dos ultimas deciden el orden)
   
-  Mayor numero de paradas por porteras utilizando 
+  Mayor numero de paradas por porteras utilizando, usando minutos jugados, tiros normales y penalties se usaran para desenpates
+
+  Mejores stats de jugadoras jovenes
+
+  Mejores stats de jugadoras en general (menos las jugadoras jovenes)
 ### Tareas
 Las tareas que se piden son las siguientes:
 1. Explicar las ventajas y desventajas de la BD NOSQL seleccionada, en resumen, el por
