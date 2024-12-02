@@ -1,5 +1,5 @@
 ### Actividad Bases de Datos NoSQL
-![ETL DIAGRAM](etl.png)
+![ETL DIAGRAM](./img/etl_small.png)
 ### Caso de uso
 ### Tareas
 Las tareas que se piden son las siguientes:
