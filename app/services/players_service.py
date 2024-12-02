@@ -1,4 +1,4 @@
-from app.repositories.players_repository import PlayersRepository
+from repositories import PlayersRepository
 
 class PlayersService:
     @staticmethod

@@ -1,0 +1,11 @@
+services:
+ app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_instance
+    environment:
+      - MONGO_URI=mongodb://host.docker.internal:27017  
+    ports:
+      - "8000:8000" 
+    network_mode: bridge

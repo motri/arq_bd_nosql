@@ -8,14 +8,20 @@ class TeamsRepository:
             {"$addFields": {
                 "ranking_score": {
                     "$add": [
-                        {"$multiply": ["$statistics.general.goals", 3.0]},
+                        {"$multiply": ["$statistics.general.goals", 2.5]},
                         {"$multiply": ["$statistics.general.assists", 2.0]},
-                        {"$multiply": ["$statistics.team.victory_margin", 1.0]}
+                        {"$multiply": ["$statistics.general.victory_margin", 1.5]},
                     ]
                 }
             }},
             {"$sort": {"ranking_score": -1}},
-            {"$limit": limit}
+            {"$limit": limit},
+            {"$project": {
+                "_id": 0,
+                "team_name": 1,
+                "ranking_score": 1,
+                "statistics": 1
+            }}
         ]
         result = list(db['teams'].aggregate(pipeline))
         elapsed_time = time.time() - start_time

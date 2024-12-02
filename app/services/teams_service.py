@@ -1,4 +1,4 @@
-from app.repositories.teams_repository import TeamsRepository
+from repositories import TeamsRepository
 
 class TeamsService:
     @staticmethod

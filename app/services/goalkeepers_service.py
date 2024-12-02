@@ -1,4 +1,4 @@
-from app.repositories.goalkeepers_repository import GoalkeepersRepository
+from repositories import GoalkeepersRepository
 
 class GoalkeepersService:
     @staticmethod

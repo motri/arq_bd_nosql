@@ -16,7 +16,14 @@ class GoalkeepersRepository:
                 }
             }},
             {"$sort": {"ranking_score": -1}},
-            {"$limit": limit}
+            {"$limit": limit},
+            {"$project": {
+                "_id": 0,  
+                "name": 1,  
+                "statistics": 1,
+                "ranking_score": 1,
+                "name": 1
+            }}
         ]
         result = list(db['goalkeepers'].aggregate(pipeline))
         elapsed_time = time.time() - start_time
