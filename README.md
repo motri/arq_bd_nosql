@@ -8,16 +8,29 @@ Queremos poder hacer el seguimiento de las jugadoras de futbal profesional para 
 - Young Football Player of the Year (Womens Football Award)
 - Best Club of the Year (Womens Football Award)
 ### Esquemas
-En las bases de datos no sql el concepto de esquema es un tanto anacronista ya que en principio son bases de datos sin esquema (aunque normalmente hay que cumplir unos minimos como en Dynamodb, en la que siempre hara falta un partition key, y si ha sido definida, un sort key). Pero ello no quiere decir que no modelemos nuestros datos en base a ciertos criterios. En el caso de MongoDB tenemos el concepto de colecciones.
-Las colecciones se pueden entender como tablas, pero eso no quiere decir que dividir los datos en colecciones no siempre es util. MongoDB permite agrupar todos los datos en sus documentos, lo que se conoce como Embedding o dividirlos en colecciones logicas agrupadas por el tipo de datos (teniendo en cuenta cosas como patrones de acceso), conocido como Referencing.
-Para nuestra problematica, podriamos crear colecciones basandonos en posición (GK para porteras por ejemplo) o edad (Young Football Player of the Year). Sin embargo en otros casos como Balon de oro y Player of the Year se consideran todas las posiciones, por lo que quedaría considerar: ¿Nos interesa una colección que solo abarque las porteras, otra jugadoras menores de cierta edad y una por equipos? Nos importa la duplicacion de datos en varias colecciones?
+En las bases de datos NoSQL, el concepto de esquema puede parecer algo anacrónico, ya que estas bases de datos están diseñadas, en principio, para ser "sin esquema". Sin embargo, normalmente existen ciertos requisitos mínimos que deben cumplirse. Por ejemplo, en DynamoDB siempre se necesita una partition key y, si está definida, una sort key. Esto no significa que no debamos modelar nuestros datos siguiendo ciertos criterios. En el caso de MongoDB, surge el concepto de colecciones.
+
+Las colecciones pueden compararse con las tablas en las bases de datos relacionales, aunque esto no implica que dividir los datos en múltiples colecciones sea siempre la mejor opción. MongoDB permite dos enfoques principales para organizar los datos:
+
+Embedding: Agrupar todos los datos relacionados dentro de un mismo documento.
+Referencing: Dividir los datos en colecciones lógicas basadas en su tipo o en patrones de acceso, conectándolos mediante referencias.
+En nuestro caso, podríamos considerar crear colecciones basadas en criterios como la posición (por ejemplo, una colección para porteras bajo el identificador GK) o la edad (como una colección para Young Football Player of the Year). Sin embargo, en otros contextos, como el premio Balón de Oro o Player of the Year, se incluyen todas las posiciones, lo que plantea algunas preguntas importantes:
+
+¿Nos conviene crear colecciones específicas, como una para porteras, otra para jugadoras jóvenes y otra por equipos?
+¿Estamos dispuestos a aceptar cierta duplicación de datos entre colecciones si esto simplifica las consultas o mejora el rendimiento?
+Estas decisiones dependen en gran medida de las necesidades específicas del caso de uso, incluyendo factores como el rendimiento, la facilidad de mantenimiento y los patrones de acceso a los datos.
+
 Consideremos los patrones de acceso:
 - WRITES:
-  Resultado de partido, jugado en casa, rango de victoria (diferencia de goles) => Best Club of the Year (Womens Football Award)
+  Resultado de partido, jugado en casa, rango de victoria (diferencia de goles) => Best Club of the Year (Womens Football Award) 
+
   Paradas, paradas de penalty, minutos jugados => El guante de oro
+
   Stadisticas generales de jugadoras => Otras competiciones
+
 - READS:
   Mayor numero de partidos ganados, ordenados por la mayoria ganados fuera de casa, y rango de victoria (en caso de empate las dos ultimas deciden el orden)
+  
   Mayor numero de paradas por porteras utilizando 
 ### Tareas
 Las tareas que se piden son las siguientes:
