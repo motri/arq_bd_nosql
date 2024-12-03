@@ -4,11 +4,11 @@
 Queremos poder hacer el seguimiento de las jugadoras de futbal profesional para diferentes premios, incluyendo:
 - El balon de oro
 - El guante de oro
-- Player of the year (Womens Football Award)
 - Young Football Player of the Year (Womens Football Award)
 - Best Club of the Year (Womens Football Award)
 
 ### Estrategia
+
 #### Base de datos
 
 La eleccion en mi caso para esta propuesta es MongoDB ya que entre otras cosas preveo patrones de lectura algo complejos y comparada con otras (por ejemplo Cassandra) MongoDB es mas adecuada. 
@@ -42,19 +42,415 @@ Consideremos los patrones de acceso:
   Mejores stats de jugadoras jovenes
 
   Mejores stats de jugadoras en general (menos las jugadoras jovenes)
+
+Como partimos de 3 data sets: datos de jugadoras, datos de equipos y datos de porteras, crearemos 3 colecciones con un esquema/formato cada uno que se adapte a nuestro caso de uso.
+##### Porteras:
+```json
+{
+  "name": "string",
+  "team": "string",
+  "position": "string", // Siempre "GK"
+  "debut": "int",       // Año de debut
+  "statistics": {
+    "general": {
+      "minutes_played": "int"
+    },
+    "goalkeeper": {
+      "saves": "int",
+      "penalty_saves": "int"
+    }
+  }
+}
+```
+##### Jugadoras:
+```json
+{
+  "name": "string", 
+  "nation": "string", 
+  "position": "string", 
+  "squad": "string", 
+  "age": "integer", 
+  "debut": "integer", 
+  "statistics": {
+    "general": {
+      "matches_played": "integer", 
+      "starts": "integer", 
+      "minutes_played": "integer", 
+      "goals": "integer", 
+      "assists": "integer"
+    }, 
+    "advanced": {
+      "offsides": "integer", 
+      "crosses": "integer", 
+      "tackles_won": "integer", 
+      "penalties_won": "integer", 
+      "penalties_conceded": "integer", 
+      "own_goals": "integer", 
+      "recoveries": "integer", 
+      "aerial_duels": {
+        "won": "integer", 
+        "lost": "integer"
+      }, 
+      "completed_passes": "integer"
+    }
+  }
+}
+```
+##### Equipos:
+```json
+{
+  "name": "string",
+  "league": "string",
+  "statistics": {
+    "general": {
+      "goals": "int",
+      "assists": "int",
+      "victory_margin": "int"
+    }
+  }
+}
+```
+Estos esquemas han sido creados a partir de los scripts de python en la carpeta load_and_transform
+
 ### Tareas
-Las tareas que se piden son las siguientes:
-1. Explicar las ventajas y desventajas de la BD NOSQL seleccionada, en resumen, el por
-qué.
-2. Definir el esquema, y las sentencias de creación de este, ya sean generación de tablas,
-grafos o documentos…
-3. Definir las sentencias de inserción para 100 registros del dataset. Si es necesario
-utilizar un script para adaptar la inserción desde el csv o usar un API (por ejemplo, de
-Python), adjuntar el script y explicar el por qué y cómo se ejecutaría.
-4. Definir (si se puede) sentencias de modificación para dos de los registros, cambiando
-el nombre de la jugadora a Mayúsculas.
-5. Definir las siguientes consultas:
+Definir las siguientes consultas:
+
 a. Consulta por una jugadora especifico
+
+He creado un endpoint para hacer consultas generales, en base a field (o fields) y algunas condiciones:
+
 i. Filtrando por el año de comienzo en el football mayor de 2020
+
+curl "http://localhost:8000/api/players/query?field=debut&condition=bigger&value=2020"
+```json
+{
+    "data": [
+        {
+            "_id": "674e460c3d74dc129e69126e",
+            "age": 21,
+            "debut": 2021.0,
+            "name": "Albeta",
+            "nation": NaN,
+            "position": "DF",
+            "squad": "Villarreal",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 0.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 0.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 0.0,
+                    "tackles_won": 0.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 1,
+                    "minutes_played": 7,
+                    "starts": 0
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e69126f",
+            "age": 16,
+            "debut": 2024.0,
+            "name": "Ainhoa Alguacil",
+            "nation": NaN,
+            "position": "MF,FW",
+            "squad": "Valencia",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 1.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 3.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 26.0,
+                    "tackles_won": 2.0
+                },
+                "general": {
+                    "assists": 1,
+                    "goals": 0,
+                    "matches_played": 6,
+                    "minutes_played": 296,
+                    "starts": 4
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e691271",
+            "age": 19,
+            "debut": 2024.0,
+            "name": "Carmen Álvarez",
+            "nation": NaN,
+            "position": "FW,MF",
+            "squad": "Real Betis",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 18.0,
+                        "won": 14.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 0.0,
+                    "offsides": 3.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 13.0,
+                    "tackles_won": 1.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 11,
+                    "minutes_played": 495,
+                    "starts": 6
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e691273",
+            "age": 17,
+            "debut": 2023.0,
+            "name": "Jone Amezaga",
+            "nation": NaN,
+            "position": "FW",
+            "squad": "Athletic Club",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 4.0,
+                        "won": 2.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 4.0,
+                    "offsides": 2.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 19.0,
+                    "tackles_won": 6.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 3,
+                    "matches_played": 6,
+                    "minutes_played": 384,
+                    "starts": 5
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e69127e",
+            "age": 16,
+            "debut": 2025.0,
+            "name": "Daniela Arques",
+            "nation": NaN,
+            "position": "MF",
+            "squad": "Alhama",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 7.0,
+                        "won": 5.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 4.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 58.0,
+                    "tackles_won": 16.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 10,
+                    "minutes_played": 570,
+                    "starts": 6
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e691292",
+            "age": 19,
+            "debut": 2021.0,
+            "name": "Laura Blasco",
+            "nation": NaN,
+            "position": "DF",
+            "squad": "Sporting Huelva",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 0.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 0.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 1.0,
+                    "tackles_won": 0.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 1,
+                    "minutes_played": 45,
+                    "starts": 0
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e69129f",
+            "age": 19,
+            "debut": 2022.0,
+            "name": "Alba Caño",
+            "nation": NaN,
+            "position": "MF",
+            "squad": "Barcelona",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 0.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 0.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 4.0,
+                    "tackles_won": 1.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 1,
+                    "minutes_played": 45,
+                    "starts": 0
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6912a2",
+            "age": 18,
+            "debut": 2022.0,
+            "name": "Estela Carbonell",
+            "nation": "es ESP",
+            "position": "DF",
+            "squad": "Levante",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 1.0,
+                        "won": 4.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 15.0,
+                    "offsides": 1.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 1.0,
+                    "recoveries": 23.0,
+                    "tackles_won": 4.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 5,
+                    "minutes_played": 261,
+                    "starts": 4
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6912a7",
+            "age": 20,
+            "debut": 2021.0,
+            "name": "Raiderlin Carrasco",
+            "nation": "ve VEN",
+            "position": "DF",
+            "squad": "Sporting Huelva",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 7.0,
+                        "won": 3.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 13.0,
+                    "offsides": 2.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 55.0,
+                    "tackles_won": 17.0
+                },
+                "general": {
+                    "assists": 1,
+                    "goals": 0,
+                    "matches_played": 10,
+                    "minutes_played": 715,
+                    "starts": 8
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6912a8",
+            "age": 20,
+            "debut": 2023.0,
+            "name": "Sara Carrillo",
+            "nation": NaN,
+            "position": "FW,MF",
+            "squad": "Alavés",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 19.0,
+                        "won": 15.0
+                    },
+                    "completed_passes": 0.0,
+                    "crosses": 7.0,
+                    "offsides": 1.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 22.0,
+                    "tackles_won": 3.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 2,
+                    "matches_played": 11,
+                    "minutes_played": 610,
+                    "starts": 7
+                }
+            }
+        }
+    ],
+    "execution_time": 0.0031998157501220703
+}
+```
 ii. Filtrando que el equipo que empiece “Machester…..”
-b. Consulta por un país concreto donde juega una jugadora
+
+curl "http://localhost:8000/api/players/query?field=squad&condition=contains&value=Manchester"
+```json
+

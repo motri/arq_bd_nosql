@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import json
 
 
-gk_data = pd.read_csv("./data/csv_data/all_players.csv")
+gk_data = pd.read_csv("../data/csv_data/all_players.csv")
 
 def transform_gk_data_to_json(df):
     documents = []

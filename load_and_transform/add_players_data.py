@@ -1,6 +1,7 @@
 import json
 from pymongo import MongoClient
 import pandas as pd
+import random
 
 def transform_data_to_json(df):
     players_json = []
@@ -13,7 +14,7 @@ def transform_data_to_json(df):
             "position": row.get("Pos"),
             "squad": row.get("Squad"),
             "age": age,
-            "born": int(row.get("Born", 0)) if pd.notnull(row.get("Born")) else None,
+            "debut": row.get("Born", 0)+ 18 + random.randint(0, 3),
             "statistics": {
                 "general": {
                     "matches_played": row.get("MP"),
@@ -42,7 +43,7 @@ def transform_data_to_json(df):
     return players_json
 
 # Transform the data
-all_players = pd.read_csv("./data/csv_data/all_players.csv")
+all_players = pd.read_csv("../data/csv_data/all_players.csv")
 transformed_data = transform_data_to_json(all_players)
 
 def insert_into_mongodb(data):

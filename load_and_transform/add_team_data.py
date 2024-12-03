@@ -22,7 +22,7 @@ def transform_data_to_json(df):
     return transformed_data
 
 # Transform the data
-all_teams = pd.read_csv("./data/csv_data/all_teams.csv")
+all_teams = pd.read_csv("../data/csv_data/all_teams.csv")
 transformed_teams = transform_data_to_json(all_teams)
 
 def insert_into_mongodb(data):

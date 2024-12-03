@@ -1,4 +1,6 @@
 import time
+from bson.regex import Regex
+
 class PlayersRepository:
     @staticmethod
     def query_young_players(db, age_threshold=21, limit=10):
@@ -58,3 +60,29 @@ class PlayersRepository:
         return {"data": result, "execution_time": elapsed_time}
 
 
+    @staticmethod
+    def query_dynamic_players(db, filters, limit):
+        start_time = time.time()
+        query = {}
+        for filter_ in filters:
+            field = filter_['field']
+            condition = filter_['condition']
+            value = filter_['value']
+
+            if condition == "equal":
+                query[field] = value
+            elif condition == "bigger":
+                query[field] = {"$gt": value}
+            elif condition == "smaller":
+                query[field] = {"$lt": value}
+            elif condition == "contains":
+                query[field] = {"$regex": "Manchester", "$options": "i"} 
+
+        # Execute the query
+        result = list(db['players'].find(query).limit(limit))
+        for doc in result:
+            if '_id' in doc:
+                doc['_id'] = str(doc['_id'])
+
+        elapsed_time = time.time() - start_time
+        return {"data": result, "execution_time": elapsed_time}

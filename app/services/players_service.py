@@ -8,3 +8,7 @@ class PlayersService:
     @staticmethod
     def get_golden_ball_candidates(db, limit):
         return PlayersRepository.query_golden_ball(db, limit)
+
+    @staticmethod
+    def query_dynamic(db, filters, limit):
+        return PlayersRepository.query_dynamic_players(db, filters, limit)
