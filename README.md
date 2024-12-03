@@ -1,5 +1,4 @@
 ### Actividad Bases de Datos NoSQL
-![ETL DIAGRAM](./img/etl_small.png)
 ### Caso de uso
 Queremos poder hacer el seguimiento de las jugadoras de futbal profesional para diferentes premios, incluyendo:
 - El balon de oro
@@ -453,4 +452,329 @@ ii. Filtrando que el equipo que empiece “Machester…..”
 
 curl "http://localhost:8000/api/players/query?field=squad&condition=contains&value=Manchester"
 ```json
-
+{
+    "data": [
+        {
+            "_id": "674e460c3d74dc129e6913d0",
+            "age": 22,
+            "debut": 2018.0,
+            "name": "Laia Aleixandri",
+            "nation": "es ESP",
+            "position": "DF,MF",
+            "squad": "Manchester City",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 5.0,
+                        "won": 6.0
+                    },
+                    "completed_passes": 543.0,
+                    "crosses": 1.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 65.0,
+                    "tackles_won": 0.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 8,
+                    "minutes_played": 679,
+                    "starts": 8
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913d1",
+            "age": 25,
+            "debut": 2017.0,
+            "name": "Filippa Angeldal",
+            "nation": "se SWE",
+            "position": "MF",
+            "squad": "Manchester City",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 0.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 55.0,
+                    "crosses": 0.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 7.0,
+                    "tackles_won": 0.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 4,
+                    "minutes_played": 111,
+                    "starts": 1
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913d9",
+            "age": 23,
+            "debut": 2019.0,
+            "name": "Ona Batlle",
+            "nation": "es ESP",
+            "position": "DF",
+            "squad": "Manchester Utd",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 3.0,
+                        "won": 2.0
+                    },
+                    "completed_passes": 274.0,
+                    "crosses": 20.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 32.0,
+                    "tackles_won": 8.0
+                },
+                "general": {
+                    "assists": 4,
+                    "goals": 1,
+                    "matches_played": 5,
+                    "minutes_played": 449,
+                    "starts": 5
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913e0",
+            "age": 21,
+            "debut": 2019.0,
+            "name": "Julie Blakstad",
+            "nation": "no NOR",
+            "position": "FW",
+            "squad": "Manchester City",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 2.0,
+                        "won": 3.0
+                    },
+                    "completed_passes": 74.0,
+                    "crosses": 6.0,
+                    "offsides": 2.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 15.0,
+                    "tackles_won": 4.0
+                },
+                "general": {
+                    "assists": 1,
+                    "goals": 2,
+                    "matches_played": 6,
+                    "minutes_played": 210,
+                    "starts": 2
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913e2",
+            "age": 28,
+            "debut": 2014.0,
+            "name": "Hannah Blundell",
+            "nation": "eng ENG",
+            "position": "DF",
+            "squad": "Manchester Utd",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 2.0,
+                        "won": 3.0
+                    },
+                    "completed_passes": 416.0,
+                    "crosses": 6.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 25.0,
+                    "tackles_won": 8.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 1,
+                    "matches_played": 8,
+                    "minutes_played": 608,
+                    "starts": 8
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913ee",
+            "age": 27,
+            "debut": 2016.0,
+            "name": "Vilde Bøe Risa",
+            "nation": "no NOR",
+            "position": "FW,MF",
+            "squad": "Manchester Utd",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 0.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 18.0,
+                    "crosses": 1.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 3.0,
+                    "tackles_won": 0.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 4,
+                    "minutes_played": 56,
+                    "starts": 0
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913f5",
+            "age": 22,
+            "debut": 2018.0,
+            "name": "Kerstin Casparij",
+            "nation": "nl NED",
+            "position": "DF",
+            "squad": "Manchester City",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 3.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 351.0,
+                    "crosses": 11.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 36.0,
+                    "tackles_won": 12.0
+                },
+                "general": {
+                    "assists": 1,
+                    "goals": 0,
+                    "matches_played": 7,
+                    "minutes_played": 595,
+                    "starts": 7
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913f6",
+            "age": 23,
+            "debut": 2017.0,
+            "name": "Deyna Castellanos",
+            "nation": "ve VEN",
+            "position": "MF",
+            "squad": "Manchester City",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 4.0,
+                        "won": 3.0
+                    },
+                    "completed_passes": 206.0,
+                    "crosses": 5.0,
+                    "offsides": 1.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 29.0,
+                    "tackles_won": 4.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 8,
+                    "minutes_played": 612,
+                    "starts": 7
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e6913fc",
+            "age": 31,
+            "debut": 2010.0,
+            "name": "Laura Coombs",
+            "nation": "eng ENG",
+            "position": "MF",
+            "squad": "Manchester City",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 4.0,
+                        "won": 3.0
+                    },
+                    "completed_passes": 228.0,
+                    "crosses": 2.0,
+                    "offsides": 1.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 34.0,
+                    "tackles_won": 8.0
+                },
+                "general": {
+                    "assists": 2,
+                    "goals": 3,
+                    "matches_played": 8,
+                    "minutes_played": 633,
+                    "starts": 8
+                }
+            }
+        },
+        {
+            "_id": "674e460c3d74dc129e691405",
+            "age": 29,
+            "debut": 2014.0,
+            "name": "Mary Earps",
+            "nation": "eng ENG",
+            "position": "GK",
+            "squad": "Manchester Utd",
+            "statistics": {
+                "advanced": {
+                    "aerial_duels": {
+                        "lost": 0.0,
+                        "won": 0.0
+                    },
+                    "completed_passes": 325.0,
+                    "crosses": 0.0,
+                    "offsides": 0.0,
+                    "own_goals": 0,
+                    "penalties_conceded": 0.0,
+                    "penalties_won": 0.0,
+                    "recoveries": 18.0,
+                    "tackles_won": 0.0
+                },
+                "general": {
+                    "assists": 0,
+                    "goals": 0,
+                    "matches_played": 8,
+                    "minutes_played": 720,
+                    "starts": 8
+                }
+            }
+        }
+    ],
+    "execution_time": 0.014238834381103516
+}
+```
