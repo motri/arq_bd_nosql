@@ -778,3 +778,16 @@ curl "http://localhost:8000/api/players/query?field=squad&condition=contains&val
     "execution_time": 0.014238834381103516
 }
 ```
+
+### Recursos usados
+Me he valido tanto de la documentación oficial como de Chatgpt para completar esta tarea. Algunas de las cosas con la que me ha ayudado Chatgpt son:
+
+Implementar consultas avanzadas y dinámicas que permiten filtrar datos por diversos criterios, como años de debut o nombres de equipos.
+
+Depurar problemas relacionados con configuraciones de contenedores Docker, conexiones a la base de datos y la ejecución de consultas desde una API.
+
+Automatizar la inserción de datos desde datasets complejos, garantizando su correcta transformación al esquema diseñado.
+
+Proporcionar herramientas de diagnóstico, como logs y pruebas directas, para identificar problemas en la ejecución de las consultas.
+
+Refinar la API para incluir funcionalidades dinámicas y adaptables, mejorando la flexibilidad del sistema.
